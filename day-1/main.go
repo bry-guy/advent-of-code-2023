@@ -5,8 +5,7 @@ import (
 	"bytes"
 	"fmt"
 	"os"
-
-	"github.com/bry-guy/advent-of-code-2023/internal/first_last"
+	"time"
 )
 
 // --- Day 1: Trebuchet?! ---
@@ -24,8 +23,10 @@ import (
 // Consider your entire calibration document. What is the sum of all of the calibration values?
 
 func main() {
+	start := time.Now()
+
 	// Read file
-	if len(os.Args) != 2 {
+	if len(os.Args) < 2 {
 		fmt.Println("error: requires one argument (filepath)")
 	}
 
@@ -40,21 +41,16 @@ func main() {
 	reader := bufio.NewReader(bytes.NewReader(buf))
 
 	var sum int
-
-	for {
-		line, err := reader.ReadBytes('\n')
-		if err != nil {
-			break
-		}
-
-		val, err := first_last.Parse(line)
-		if err != nil {
-			fmt.Printf("error: %e\n", err)
-			os.Exit(1)
-		}
-
-		sum += val
+	if len(os.Args) == 3 && os.Args[2] == "--async" {
+		sum = day1_async(reader)
+	} else {
+		sum = day1(reader)
 	}
 
 	fmt.Printf("sum: %v\n", sum)
+
+	end := time.Now()
+	duration := end.UnixMicro() - start.UnixMicro()
+
+	fmt.Printf("duration: %v us\n", duration)
 }
