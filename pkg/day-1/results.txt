@@ -1,0 +1,19 @@
+$ go run . input.txt
+filepath: input.txt
+sum: 54632
+duration: 230 us
+
+$ go run . input.txt --async
+filepath: input.txt
+sum: 54632
+duration: 1646 us
+
+$ go run . input_large.txt
+filepath: input_large.txt
+sum: 1638960
+duration: 4237 us
+
+$ go run . input_large.txt --async
+filepath: input_large.txt
+sum: 1638960
+duration: 24780 us
